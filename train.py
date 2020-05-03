@@ -9,7 +9,7 @@ from tqdm import tqdm
 num_classes = 6
 learning_rate = 0.0005
 weight_decay = 0.01
-num_epochs = 20
+num_epochs = 30
 
 #Loading dataset
 transform = transforms.Compose([transforms.ToTensor()])

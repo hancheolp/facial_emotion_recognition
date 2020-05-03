@@ -2,8 +2,8 @@
 From images, this model detects locations of faces and recognizes emotions that appear in the face. This model is based on Faster R-CNN for object detection.
 
 # Run
-* Training the model: python train.py
-* Inference: python test.py (Test images should be placed in "data/test/")  
+* Training the model: python train.py (Images should be placed in "data/train/img")
+* Inference: python test.py (Images should be placed in "data/test/img")  
   
 # For light-weight model
 * We used the mobilinet_v2 pretrained with imagenet dataset. 

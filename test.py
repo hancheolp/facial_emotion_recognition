@@ -7,11 +7,10 @@ from PIL import ImageDraw
 import numpy as np
 from collections import defaultdict
 
-
 #Hyper-parameters
 num_classes = 6
 
-state_filename = 'checkpoints/epoch-19.pth'
+state_filename = 'checkpoints/epoch-16.pth'
 label_dict = {"background": 0, "neutral": 1, "anger": 2, "surprise": 3, "smile": 4, "sad": 5}
 index_to_label = {index: label for label, index in label_dict.items()}
 
@@ -20,8 +19,8 @@ transform = transforms.Compose([transforms.ToTensor()])
 dataset = NotaDataset(root="data", train=False, transform=transform)
 
 #Setting a device
-device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-#device = torch.device("cpu")
+#device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+device = torch.device("cpu")
 #Loading our model
 model = model.get_model(num_classes)
 model.load_state_dict(torch.load(state_filename))
@@ -49,6 +48,7 @@ with torch.no_grad():
         img = img.to(device)
         prediction = model([img])[0]
 
+        #Selecting the best predictions
         boxes = dict()
         for box, label, score in zip(prediction['boxes'], prediction['labels'], prediction['scores']):
             box = tuple(map(int, box))
@@ -87,4 +87,5 @@ with torch.no_grad():
 
             ), fill=(0, 0, 0))
 
+        #Saving parameters
         img_pil.save('test_output/test_img_'+str(index)+".png", 'PNG')
